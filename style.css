@@ -27,3 +27,44 @@ body {
 [hidden] {
     display: none !important;
 }
+.primary-button {
+    height: 44px;
+    min-height: 0;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 4px;
+    background: var(--purple);
+    color: white;
+    box-shadow: none;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 21px;
+}
+
+.primary-button:hover {
+    background: #3d00d9;
+}
+
+.login-input,
+.search-field {
+    width: 100%;
+    padding: 0 16px;
+    border: 1px solid var(--line);
+    background: white;
+    color: var(--ink);
+    box-shadow: none;
+    font-size: 16px;
+}
+
+.login-input:focus,
+.search-field:focus-within {
+    border-color: var(--purple);
+    outline: 1px solid var(--purple);
+    outline-offset: 0;
+}
+
+.login-input::placeholder,
+.search-field input::placeholder {
+    color: var(--muted);
+    opacity: 1;
+}
