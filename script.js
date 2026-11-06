@@ -50,3 +50,41 @@ async function fetchData(path) {
     const result = await response.json();
     return result.data;
 }
+async function loadIssues(searchText = "") {
+    // Only the latest request should update the issue list.
+    const requestNumber = ++lastListRequest;
+    activeSearch = searchText;
+    issuesLoaded = false;
+    issueGrid.hidden = true;
+    listFeedback.hidden = true;
+    listLoading.hidden = false;
+
+    let path = "/issues";
+    if (searchText !== "") {
+        path = "/issues/search?q=" + encodeURIComponent(searchText);
+    }
+
+    try {
+        const issues = await fetchData(path);
+        if (requestNumber !== lastListRequest) {
+            return;
+        }
+
+        currentIssues = issues;
+        showIssues();
+        issuesLoaded = true;
+    } catch {
+        if (requestNumber !== lastListRequest) {
+            return;
+        }
+
+        issueCount.textContent = "0 Issues";
+        listMessage.textContent = "Could not load issues. Please try again.";
+        retryButton.hidden = false;
+        listFeedback.hidden = false;
+    } finally {
+        if (requestNumber === lastListRequest) {
+            listLoading.hidden = true;
+        }
+    }
+}
