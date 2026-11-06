@@ -178,5 +178,22 @@
             <button aria-label="Close New Issue">Close</button>
         </form>
     </dialog>
+     <template id="issue-card-template">
+        <button type="button" class="card issue-card text-left">
+            <span class="card-content">
+                <span class="flex items-center justify-between gap-2">
+                    <img class="status-icon" width="24" height="24" alt="">
+                    <span class="badge priority-badge"></span>
+                </span>
+                <span class="issue-card-title"></span>
+                <span class="issue-card-description"></span>
+                <span class="issue-labels flex gap-1"></span>
+            </span>
+            <span class="card-footer flex flex-col gap-2">
+                <span class="issue-card-author"></span>
+                <span class="issue-card-date"></span>
+            </span>
+        </button>
+    </template>
 </body>
 </html>
