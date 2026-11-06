@@ -119,5 +119,52 @@
             </section>
         </main>
     </div>
+    <dialog id="issue-modal" class="modal tracker-modal" aria-labelledby="modal-title">
+        <div class="modal-box tracker-modal-box flex flex-col gap-6">
+            <header>
+                <h2 id="modal-title" class="modal-title">Issue details</h2>
+                <div id="modal-meta" class="modal-meta mt-2 flex flex-wrap items-center gap-2" hidden>
+                    <span id="modal-status" class="badge modal-status"></span>
+                    <span class="meta-dot"></span>
+                    <span id="modal-author"></span>
+                    <span class="meta-dot"></span>
+                    <span id="modal-created"></span>
+                </div>
+            </header>
+
+            <div id="modal-loading" class="flex items-center justify-center gap-2 py-6" role="status" hidden>
+                <span class="loading loading-spinner" aria-hidden="true"></span>
+                Loading issue details…
+            </div>
+            <p id="modal-error" class="text-sm" role="alert" hidden>
+                Could not load this issue. Close the window and try again.
+            </p>
+
+            <div id="modal-details" class="flex flex-col gap-6" hidden>
+                <div id="modal-labels" class="modal-labels flex flex-wrap gap-1"></div>
+                <p id="modal-description"></p>
+                <dl class="issue-facts grid grid-cols-2 gap-2.5">
+                    <div>
+                        <dt>Assignee:</dt>
+                        <dd id="modal-assignee"></dd>
+                    </div>
+                    <div>
+                        <dt>Priority:</dt>
+                        <dd><span id="modal-priority" class="badge priority-badge modal-priority"></span></dd>
+                    </div>
+                </dl>
+            </div>
+
+            <div class="flex items-center justify-between gap-4">
+                <p id="modal-update" class="modal-update" hidden></p>
+                <form class="ml-auto" method="dialog">
+                    <button type="submit" class="btn btn-primary primary-button">Close</button>
+                </form>
+            </div>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button aria-label="Close issue details">Close</button>
+        </form>
+    </dialog>
 </body>
 </html>
