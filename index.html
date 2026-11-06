@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -166,7 +166,8 @@
             <button aria-label="Close issue details">Close</button>
         </form>
     </dialog>
-     <dialog id="new-issue-modal" class="modal tracker-modal" aria-labelledby="new-issue-title">
+
+    <dialog id="new-issue-modal" class="modal tracker-modal" aria-labelledby="new-issue-title">
         <div class="modal-box tracker-modal-box new-issue-modal-box flex flex-col gap-6">
             <h2 id="new-issue-title" class="modal-title">New Issue</h2>
             <p>This demo uses the course API to browse, filter, and search issues.</p>
@@ -178,7 +179,8 @@
             <button aria-label="Close New Issue">Close</button>
         </form>
     </dialog>
-     <template id="issue-card-template">
+
+    <template id="issue-card-template">
         <button type="button" class="card issue-card text-left">
             <span class="card-content">
                 <span class="flex items-center justify-between gap-2">

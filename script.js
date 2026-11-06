@@ -23,6 +23,8 @@ let activeSearch = "";
 let issuesLoaded = false;
 let lastListRequest = 0;
 let lastDetailRequest = 0;
+
+// Check the demo username and password.
 loginForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -50,6 +52,8 @@ async function fetchData(path) {
     const result = await response.json();
     return result.data;
 }
+
+// Use the search endpoint when the search box contains a query.
 async function loadIssues(searchText = "") {
     // Only the latest request should update the issue list.
     const requestNumber = ++lastListRequest;
@@ -88,6 +92,7 @@ async function loadIssues(searchText = "") {
         }
     }
 }
+
 function showIssues() {
     let issues = currentIssues;
 
@@ -132,6 +137,7 @@ function showIssues() {
 
     issueGrid.hidden = false;
 }
+
 function showPriority(badge, priority) {
     badge.textContent = priority;
     badge.dataset.priority = priority;
@@ -157,3 +163,91 @@ function showLabels(container, labels) {
 function formatDate(date, locale) {
     return new Date(date).toLocaleDateString(locale, { timeZone: "UTC" });
 }
+
+// Update the active tab and show the matching issues.
+for (const button of filterButtons) {
+    button.addEventListener("click", function () {
+        activeStatus = button.dataset.status;
+
+        for (const filterButton of filterButtons) {
+            filterButton.setAttribute("aria-pressed", filterButton === button);
+        }
+
+        if (issuesLoaded) {
+            showIssues();
+        }
+    });
+}
+
+searchForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    loadIssues(searchInput.value.trim());
+});
+
+searchInput.addEventListener("input", function () {
+    if (searchInput.value.trim() === "" && activeSearch !== "") {
+        loadIssues();
+    }
+});
+
+retryButton.addEventListener("click", function () {
+    loadIssues(activeSearch);
+});
+
+// Open the modal and fetch the selected issue by its ID.
+async function openIssue(issueId) {
+    const requestNumber = ++lastDetailRequest;
+    const modal = document.getElementById("issue-modal");
+    const title = document.getElementById("modal-title");
+    const meta = document.getElementById("modal-meta");
+    const details = document.getElementById("modal-details");
+    const updated = document.getElementById("modal-update");
+    const loading = document.getElementById("modal-loading");
+    const error = document.getElementById("modal-error");
+
+    title.textContent = "Issue details";
+    meta.hidden = true;
+    details.hidden = true;
+    updated.hidden = true;
+    error.hidden = true;
+    loading.hidden = false;
+    modal.showModal();
+
+    try {
+        const issue = await fetchData("/issue/" + issueId);
+        if (requestNumber !== lastDetailRequest || !modal.open) {
+            return;
+        }
+
+        title.textContent = issue.title;
+
+        const status = document.getElementById("modal-status");
+        status.textContent = issue.status === "closed" ? "Closed" : "Opened";
+        status.dataset.status = issue.status;
+
+        document.getElementById("modal-author").textContent = "Opened by " + issue.author;
+        document.getElementById("modal-created").textContent = formatDate(issue.createdAt, "en-GB");
+        document.getElementById("modal-description").textContent = issue.description;
+        document.getElementById("modal-assignee").textContent = issue.assignee || "Unassigned";
+        updated.textContent = "Issue #" + issue.id + " · Updated " + formatDate(issue.updatedAt, "en-GB");
+
+        showLabels(document.getElementById("modal-labels"), issue.labels);
+        showPriority(document.getElementById("modal-priority"), issue.priority);
+
+        meta.hidden = false;
+        details.hidden = false;
+        updated.hidden = false;
+    } catch {
+        if (requestNumber === lastDetailRequest && modal.open) {
+            error.hidden = false;
+        }
+    } finally {
+        if (requestNumber === lastDetailRequest) {
+            loading.hidden = true;
+        }
+    }
+}
+
+document.getElementById("new-issue-button").addEventListener("click", function () {
+    document.getElementById("new-issue-modal").showModal();
+});
