@@ -23,3 +23,30 @@ let activeSearch = "";
 let issuesLoaded = false;
 let lastListRequest = 0;
 let lastDetailRequest = 0;
+loginForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (username === "admin" && password === "admin123") {
+        loginError.hidden = true;
+        loginScreen.hidden = true;
+        dashboard.hidden = false;
+        window.scrollTo(0, 0);
+        loadIssues();
+    } else {
+        loginError.hidden = false;
+    }
+});
+
+async function fetchData(path) {
+    const response = await fetch(API_URL + path);
+
+    if (!response.ok) {
+        throw new Error("The server could not return issues.");
+    }
+
+    const result = await response.json();
+    return result.data;
+}
