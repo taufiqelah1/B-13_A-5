@@ -166,5 +166,17 @@
             <button aria-label="Close issue details">Close</button>
         </form>
     </dialog>
+     <dialog id="new-issue-modal" class="modal tracker-modal" aria-labelledby="new-issue-title">
+        <div class="modal-box tracker-modal-box new-issue-modal-box flex flex-col gap-6">
+            <h2 id="new-issue-title" class="modal-title">New Issue</h2>
+            <p>This demo uses the course API to browse, filter, and search issues.</p>
+            <form class="ml-auto" method="dialog">
+                <button type="submit" class="btn btn-primary primary-button">Close</button>
+            </form>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button aria-label="Close New Issue">Close</button>
+        </form>
+    </dialog>
 </body>
 </html>
