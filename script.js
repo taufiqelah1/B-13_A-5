@@ -88,3 +88,72 @@ async function loadIssues(searchText = "") {
         }
     }
 }
+function showIssues() {
+    let issues = currentIssues;
+
+    if (activeStatus !== "all") {
+        issues = currentIssues.filter(function (issue) {
+            return issue.status === activeStatus;
+        });
+    }
+
+    issueGrid.textContent = "";
+    issueCount.textContent = issues.length + (issues.length === 1 ? " Issue" : " Issues");
+
+    if (issues.length === 0) {
+        issueGrid.hidden = true;
+        listMessage.textContent = "No issues found.";
+        retryButton.hidden = true;
+        listFeedback.hidden = false;
+        return;
+    }
+
+    listFeedback.hidden = true;
+
+    for (const issue of issues) {
+        const card = cardTemplate.content.firstElementChild.cloneNode(true);
+        card.dataset.status = issue.status;
+
+        const icon = card.querySelector(".status-icon");
+        icon.src = "assets/" + issue.status + "-status.png";
+        icon.alt = issue.status === "closed" ? "Closed" : "Open";
+
+        showPriority(card.querySelector(".priority-badge"), issue.priority);
+        card.querySelector(".issue-card-title").textContent = issue.title;
+        card.querySelector(".issue-card-description").textContent = issue.description;
+        showLabels(card.querySelector(".issue-labels"), issue.labels);
+        card.querySelector(".issue-card-author").textContent = "#" + issue.id + " by " + issue.author;
+        card.querySelector(".issue-card-date").textContent = formatDate(issue.createdAt, "en-US");
+        card.addEventListener("click", function () {
+            openIssue(issue.id);
+        });
+        issueGrid.appendChild(card);
+    }
+
+    issueGrid.hidden = false;
+}
+function showPriority(badge, priority) {
+    badge.textContent = priority;
+    badge.dataset.priority = priority;
+}
+
+function showLabels(container, labels) {
+    container.textContent = "";
+
+    for (const label of labels) {
+        const badge = document.createElement("span");
+        badge.className = "badge issue-label";
+        badge.dataset.label = label;
+        badge.title = label;
+
+        const text = document.createElement("span");
+        text.className = "issue-label-text";
+        text.textContent = label;
+        badge.appendChild(text);
+        container.appendChild(badge);
+    }
+}
+
+function formatDate(date, locale) {
+    return new Date(date).toLocaleDateString(locale, { timeZone: "UTC" });
+}
