@@ -1,0 +1,29 @@
+@font-face {
+    font-family: Geist;
+    src: url("assets/geist.woff2") format("woff2");
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+}
+
+:root {
+    --page-bg: #f8fafc;
+    --ink: #1f2937;
+    --muted: #64748b;
+    --purple: #4a00ff;
+    --open: #00a96e;
+    --closed: #a855f7;
+    --line: #e4e4e7;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    background: var(--page-bg);
+    color: var(--ink);
+    font-family: Geist, sans-serif;
+}
+
+[hidden] {
+    display: none !important;
+}

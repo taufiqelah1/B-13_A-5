@@ -56,6 +56,68 @@
             </div>
         </section>
     </main>
-    
+    <div id="dashboard" hidden>
+        <header class="navbar site-navbar flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-1">
+                <img class="brand-logo" src="assets/github-logo.png" width="36" height="37" alt="">
+                <h1 id="dashboard-title" class="brand-title">GitHub Issues Tracker</h1>
+            </div>
+
+            <div class="nav-actions flex items-center gap-2 sm:gap-4">
+                <form id="search-form" class="min-w-0 flex-1 sm:flex-none" role="search">
+                    <div class="input search-field">
+                        <button class="search-submit" type="submit" aria-label="Search issues">
+                            <img src="assets/search.svg" width="16" height="16" alt="">
+                        </button>
+                        <input id="search-input" type="search" placeholder="Search issues..." aria-label="Search term">
+                    </div>
+                </form>
+
+                <button id="new-issue-button" class="btn btn-primary primary-button new-issue-button" type="button">
+                    <img src="assets/plus.svg" width="16" height="16" alt="">
+                    New Issue
+                </button>
+            </div>
+        </header>
+
+        <main class="dashboard-main mx-auto flex flex-col gap-4" aria-labelledby="dashboard-title">
+            <div class="status-filters flex gap-2 bg-white" role="group" aria-label="Filter issues by status">
+                <button type="button" class="btn filter-button" data-status="all" aria-pressed="true">All</button>
+                <button type="button" class="btn filter-button" data-status="open" aria-pressed="false">Open</button>
+                <button type="button" class="btn filter-button" data-status="closed" aria-pressed="false">Closed</button>
+            </div>
+
+            <section aria-labelledby="issue-count">
+                <header class="issue-summary flex flex-wrap items-center justify-between gap-4 bg-white">
+                    <div class="flex min-w-0 items-center gap-2">
+                        <span class="summary-icon flex shrink-0 items-center justify-center">
+                            <img src="assets/aperture.png" width="32" height="32" alt="">
+                        </span>
+                        <div>
+                            <h2 id="issue-count" aria-live="polite">0 Issues</h2>
+                            <p>Track and manage your project issues</p>
+                        </div>
+                    </div>
+                    <div class="issue-legend flex items-center gap-4">
+                        <span class="flex items-center gap-2"><span class="legend-dot dot-open"></span>Open</span>
+                        <span class="flex items-center gap-2"><span class="legend-dot dot-closed"></span>Closed</span>
+                    </div>
+                </header>
+                <div class="issue-list">
+                    <div id="list-loading" class="flex items-center justify-center gap-2 p-8" role="status" hidden>
+                        <span class="loading loading-spinner" aria-hidden="true"></span>
+                        Loading issues…
+                    </div>
+
+                    <div id="list-feedback" class="p-8 text-center" hidden>
+                        <p id="list-message" role="status"></p>
+                        <button id="retry-button" type="button" class="btn mt-3" hidden>Try again</button>
+                    </div>
+
+                    <div id="issue-grid" class="issue-grid grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4" hidden></div>
+                </div>
+            </section>
+        </main>
+    </div>
 </body>
 </html>
