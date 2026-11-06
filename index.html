@@ -11,6 +11,51 @@
     <script src="script.js" defer></script>
 </head>
 <body>
+    <main id="login-screen" class="flex min-h-screen items-center justify-center px-4 py-8">
+        <section class="card login-card flex w-full flex-col gap-6 bg-white" aria-labelledby="login-title">
+            <header class="flex flex-col items-center gap-6 text-center">
+                <img src="assets/github-logo.png" width="100" height="100" alt="">
+                <div>
+                    <h1 id="login-title" class="login-title">GitHub Issues Tracker</h1>
+                    <p class="login-subtitle">Sign in to manage your issues</p>
+                </div>
+            </header>
+
+            <form id="login-form" class="flex flex-col gap-6">
+                <div class="flex flex-col gap-4">
+                    <div class="login-field">
+                        <label for="username">Username</label>
+                        <input id="username" class="input login-input w-full" type="text"
+                            placeholder="Enter Username" autocomplete="username"
+                            aria-describedby="username-hint" required>
+                        <p id="username-hint" class="login-hint">Default: admin</p>
+                    </div>
+                    <div class="login-field">
+                        <label for="password">Password</label>
+                        <input id="password" class="input login-input w-full" type="password"
+                            placeholder="Enter Password" autocomplete="current-password"
+                            aria-describedby="password-hint" required>
+                        <p id="password-hint" class="login-hint">Default: admin123</p>
+                    </div>
+                </div>
+
+                <p id="login-error" class="login-error text-sm" role="alert" hidden>
+                    Use admin and admin123 to sign in.
+                </p>
+                <button type="submit" class="btn btn-primary primary-button sign-in-button w-full">Sign In</button>
+            </form>
+
+            <div class="login-divider flex items-center gap-2" aria-hidden="true">OR</div>
+
+            <div class="text-center">
+                <p class="demo-caption">Demo Credentials:</p>
+                <div class="demo-box">
+                    <p><strong>Username:</strong> admin</p>
+                    <p><strong>Password:</strong> admin123</p>
+                </div>
+            </div>
+        </section>
+    </main>
     
 </body>
 </html>
